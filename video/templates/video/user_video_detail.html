@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ video.title }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #181818;
+            color: white;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        .container {
+            width: 80%;
+            margin: auto;
+            padding: 20px;
+        }
+
+        video {
+            width: 100%;
+            max-width: 800px;
+            border-radius: 10px;
+        }
+
+        .video-info {
+            margin-top: 10px;
+        }
+
+        .back-link {
+            display: block;
+            margin-top: 20px;
+            color: #1db954;
+            font-size: 18px;
+            text-decoration: none;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>{{ video.title }}</h1>
+
+        <video controls>
+            <source src="{{ video.video_file.url }}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+
+        <div class="video-info">
+            <p><strong>Description:</strong> {{ video.description }}</p>
+        </div>
+
+        <a href="{% url 'user_video_list' %}" class="back-link">⬅ Back to Videos</a>
+    </div>
+         <a href="{% url 'video_list' %}">Back to Video List</a>
+</body>
+
+</html>

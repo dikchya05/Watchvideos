@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <style>
+        .admin-panel {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .user-panel {
+            background-color: #e9f7fd;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .button:hover {
+            background-color: #45a049;
+        }
+
+        .admin-action {
+            margin-top: 10px;
+        }
+
+        .video-actions {
+            margin-top: 20px;
+        }
+
+        .video-actions a {
+            display: inline-block;
+            margin-right: 15px;
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .video-actions a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Welcome to the Home Page</h1>
+
+    {% if user.is_authenticated %}
+    <p>Hello, {{ user.username }}!</p>
+
+    {% if user_type == 'admin' %}
+    <div class="admin-panel">
+        <h2>Admin Panel</h2>
+
+        <p>Manage all aspects of the site. You can add, update, and delete videos.</p>
+
+        <!-- Add New Video -->
+        <div class="admin-action">
+            <a href="{% url 'add_video' %}">add Video</a>
+        </div>
+
+        <!-- Edit and Delete Videos -->
+        <div class="video-actions">
+            <h3>Manage Existing Videos:</h3>
+            <a href="{% url 'video_list' %}">click here</a>
+        </div>
+
+        <br><br>
+        <!-- Logout Form -->
+        <form action="{% url 'logout' %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="button">Logout</button>
+        </form>
+    </div>
+
+    {% elif user_type == 'normal' %}
+    <div class="user-panel">
+        <h2>User Panel</h2>
+        <p>Welcome to your dashboard! Enjoy the videos and feel free to comment or like videos.</p>
+
+        <div class="admin-action">
+            <a href="{% url 'user_video_list' %}">view Video</a>
+        </div>
+
+        <br><br>
+        <!-- Logout Form -->
+        <form action="{% url 'logout' %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="button">Logout</button>
+        </form>
+    </div>
+    {% endif %}
+
+    {% else %}
+    <p>You are not logged in. <a href="{% url 'login' %}">Login</a> to access your account.</p>
+    {% endif %}
+
+    <script>
+        var user_type = '{{ user_type }}';
+        console.log("user_type ---------------------->", user_type);
+
+        // Additional interactive JavaScript features can be added here.
+        function handleAdminClick() {
+            alert('Admin features are coming soon!');
+        }
+
+        function handleUserClick() {
+            alert('You are about to view videos!');
+        }
+    </script>
+
+</body>
+
+</html>
