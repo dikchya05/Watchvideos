@@ -55,6 +55,27 @@ def edit_video(request, video_id):
 #         return redirect('video_list')
 #     return render(request, 'video/delete_video.html', {'video': video})
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 def delete_video(request, video_id):
     video = get_object_or_404(Video, id=video_id)
     if request.method == 'POST':
