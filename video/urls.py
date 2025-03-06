@@ -2,6 +2,8 @@ from django.urls import path
 from . import views
 from django.conf.urls.static import static
 from django.conf import settings
+from .views import like_video, dislike_video
+
 
 
 urlpatterns = [
@@ -18,6 +20,10 @@ urlpatterns = [
     path('delete/<int:video_id>/', views.delete_video, name='delete_video'),  # Delete video
     path('video/<int:video_id>/', views.video_detail, name='video_detail'),  # Video detail page
     path('user-video/<int:video_id>/', views.user_video_detail, name='user_video_detail'),  # Video detail page
+    path('video/<int:video_id>/like/', like_video, name='like_video'),
+    path('video/<int:video_id>/dislike/', dislike_video, name='dislike_video'),
+    path("video/<int:video_id>/comment/", views.add_comment, name="add_comment"),
+   
 
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

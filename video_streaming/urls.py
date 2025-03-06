@@ -28,7 +28,8 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('home/', views.home, name='home'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),  # Logout URL
-    path('', include('video.urls'))
+    path('', include('video.urls')),
+    path('video/<int:id>/', views.video_detail, name='video_detail'),
 
     # path('logout/', views.user_logout, name='logout'),  # Logout route
 

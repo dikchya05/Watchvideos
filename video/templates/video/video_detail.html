@@ -8,6 +8,7 @@
 </head>
 
 <body>
+  
     <h1>{{ video.title }}</h1>
     
     <!-- Display the video description -->
@@ -15,9 +16,7 @@
     
     <!-- Display the video player -->
     <video width="800" controls>
-        <source src="http://127.0.0.1:8000/{{ video.video_file }}" type="video/mp4">
-        <source src="http://127.0.0.1:8000/{{ video.video_file }}" type="video/webm">
-        <source src="http://127.0.0.1:8000/{{ video.video_file }}" type="video/ogg">
+        <source src="{{ video.video_file.url }}" type="video/mp4">
         Your browser does not support the video tag.
     </video>
 
@@ -25,7 +24,57 @@
         // Log the video file path to the console
         console.log("Video File URL: ", "{{ video.video_file }}");
     </script>
+    <div style="margin-bottom: 20px;">
+        <form action="{% url 'like_video' video.id %}" method="post" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit" style="font-size: 18px; background-color: #28a745; color: white; border: none; padding: 10px 15px; cursor: pointer;">
+                👍 Like ({{ video.total_likes }})
+            </button>
+        </form>
     
+        <form action="{% url 'dislike_video' video.id %}" method="post" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit" style="font-size: 18px; background-color: #dc3545; color: white; border: none; padding: 10px 15px; cursor: pointer;">
+                👎 Dislike ({{ video.total_dislikes }})
+            </button>
+        </form>
+    </div>
+
+     <!-- Add a Comment Section -->
+<div class="comment-form-container">
+    <h3>Add a Comment</h3>
+    {% if user.is_authenticated %}
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" style="background-color: #007bff; color: white; border: none; padding: 10px 15px; font-size: 16px; cursor: pointer;">
+                Submit Comment
+            </button>
+        </form>
+    {% else %}
+        <p><a href="{% url 'login' %}">Log in</a> to comment.</p>
+    {% endif %}
+</div>
+
+<!-- Comment List Section -->
+<hr>
+<div class="comments-section">
+    <h3>Comments</h3>
+    {% if comments %}
+        <ul>
+            {% for comment in comments %}
+                <li class="comment-item" style="margin-bottom: 10px; padding: 10px; background-color: #f8f9fa; border-radius: 5px;">
+                    <strong>{{ comment.user.username }}</strong><br>
+                    <span style="font-size: 12px; color: gray;">{{ comment.created_at }}</span>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No comments yet. Be the first to comment!</p>
+    {% endif %}
+</div>
+
+  
     <br>
     <!-- Link back to the video list -->
     <a href="{% url 'video_list' %}">Back to Video List</a>
