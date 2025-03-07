@@ -121,6 +121,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'static/'
+# Add this line if it's missing
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
+
+# If using collectstatic (not needed for development)
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 AUTH_USER_MODEL = 'accounts.CustomUser'  # If using a custom user model
 
 

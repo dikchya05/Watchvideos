@@ -8,6 +8,9 @@ class Video(models.Model):
     video_file = models.FileField(upload_to='videos/')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    thumbnail = models.ImageField(upload_to='thumbnails/', null=True, blank=True)  # Thumbnail
+    
+
     
     def total_likes(self):
         return self.likes.count()

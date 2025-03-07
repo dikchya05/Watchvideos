@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,87 +7,71 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f9f9f9;
-            color: #000;
+            background-color: #121212;
+            color: white;
             margin: 0;
             padding: 0;
         }
 
         .container {
             width: 90%;
-            max-width: 1300px;
+            max-width: 1200px;
             margin: auto;
             padding: 20px;
+            text-align: center;
         }
 
         h1 {
-            font-size: 26px;
-            color: #cc0000;
+            font-size: 28px;
+            color: #ff0000;
             margin-bottom: 20px;
-            text-align: left;
-            font-weight: bold;
         }
 
         .video-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 20px;
-            padding: 20px 0;
+            padding: 20px;
         }
 
         .video-card {
-            background: #fff;
+            background-color: #222;
             border-radius: 12px;
             overflow: hidden;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
             text-decoration: none;
-            display: flex;
-            flex-direction: column;
         }
 
         .video-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(255, 0, 0, 0.4);
         }
 
         .video-container {
             width: 100%;
-            height: 200px;
+            height: 180px;
             background: black;
-            position: relative;
         }
 
-        .video-container img, 
         .video-container video {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            border-radius: 12px 12px 0 0;
         }
 
-        .title {
-            padding: 15px;
-            font-size: 18px;
+        .video-card .title {
+            padding: 12px;
+            font-size: 16px;
             font-weight: bold;
-            text-align: left;
-            color: #333;
-            background-color: white;
+            text-align: center;
+            color: white;
+            background-color: #333;
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 600px) {
             .video-container {
-                height: 170px;
-            }
-
-            h1 {
-                font-size: 22px;
-                text-align: center;
-            }
-
-            .title {
-                font-size: 16px;
-                text-align: center;
+                height: 150px;
             }
         }
     </style>
@@ -102,13 +85,13 @@
             {% for video in videos %}
             <a href="{% url 'user_video_detail' video.id %}" class="video-card">
                 <div class="video-container">
-                    {% if video.thumbnail %}
-                    <img src="{{ video.thumbnail.url }}" alt="Video Thumbnail">
-                    {% else %}
+                    {% if video.file %}
                     <video controls>
                         <source src="{{ video.file.url }}" type="video/mp4">
                         Your browser does not support the video tag.
                     </video>
+                    {% else %}
+                    <img src="{{ video.thumbnail.url }}" alt="Thumbnail">
                     {% endif %}
                 </div>
                 <div class="title">{{ video.title }}</div>
@@ -118,5 +101,4 @@
     </div>
 
 </body>
-
 </html>

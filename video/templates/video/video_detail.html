@@ -5,79 +5,112 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ video.title }}</title>
+
+    {% load static %}
+
+    <!-- Link the External CSS File -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 
 <body>
-  
-    <h1>{{ video.title }}</h1>
-    
-    <!-- Display the video description -->
-    <p><strong>Description:</strong> {{ video.description }}</p>
-    
-    <!-- Display the video player -->
-    <video width="800" controls>
-        <source src="{{ video.video_file.url }}" type="video/mp4">
-        Your browser does not support the video tag.
-    </video>
 
-    <script>
-        // Log the video file path to the console
-        console.log("Video File URL: ", "{{ video.video_file }}");
-    </script>
-    <div style="margin-bottom: 20px;">
-        <form action="{% url 'like_video' video.id %}" method="post" style="display:inline;">
-            {% csrf_token %}
-            <button type="submit" style="font-size: 18px; background-color: #28a745; color: white; border: none; padding: 10px 15px; cursor: pointer;">
-                👍 Like ({{ video.total_likes }})
-            </button>
-        </form>
-    
-        <form action="{% url 'dislike_video' video.id %}" method="post" style="display:inline;">
-            {% csrf_token %}
-            <button type="submit" style="font-size: 18px; background-color: #dc3545; color: white; border: none; padding: 10px 15px; cursor: pointer;">
-                👎 Dislike ({{ video.total_dislikes }})
-            </button>
-        </form>
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="logo">
+            <img src="{% static 'images/logo.png' %}" alt="Logo">
+        </div>
+        <div class="nav-links">
+            <a href="{% url 'home' %}">Dashboard</a>
+            <a href="{% url 'user_video_list' %}">Videos</a>
+        </div>
+        <div class="auth-links">
+            {% if user.is_authenticated %}
+                <a href="{% url 'logout' %}" class="logout-btn">Logout</a>
+            {% else %}
+                <a href="{% url 'login' %}" class="login-btn">Login</a>
+            {% endif %}
+        </div>
     </div>
 
-     <!-- Add a Comment Section -->
-<div class="comment-form-container">
-    <h3>Add a Comment</h3>
-    {% if user.is_authenticated %}
-        <form method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" style="background-color: #007bff; color: white; border: none; padding: 10px 15px; font-size: 16px; cursor: pointer;">
-                Submit Comment
-            </button>
-        </form>
-    {% else %}
-        <p><a href="{% url 'login' %}">Log in</a> to comment.</p>
-    {% endif %}
-</div>
+    <div class="container">
+        <h1>{{ video.title }}</h1>
 
-<!-- Comment List Section -->
+        <!-- Video Player -->
+        <div class="video-container">
+            <video controls>
+                <source src="{{ video.video_file.url }}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+
+        <!-- Like & Dislike Buttons -->
+        <div class="like-dislike-buttons">
+            <form action="{% url 'like_video' video.id %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="like-btn">Like ({{ video.total_likes }})</button>
+            </form>
+            <form action="{% url 'dislike_video' video.id %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="dislike-btn">Dislike ({{ video.total_dislikes }})</button>
+            </form>
+        </div>
+
+        <!-- Comment Section -->
+        <div class="comment-form-container">
+            <h3>Add a Comment</h3>
+            {% if user.is_authenticated %}
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="comment-btn">Submit Comment</button>
+                </form>
+            {% else %}
+                <p><a href="{% url 'login' %}" class="login-link">Log in</a> to comment.</p>
+            {% endif %}
+        </div>
+
+            <!-- Comment List Section -->
 <hr>
-<div class="comments-section">
-    <h3>Comments</h3>
+<div class="comments-section" style="max-width: 600px; margin: auto; padding: 20px;">
+    <h3 style="color: #000; font-weight: bold;">Comments</h3>
     {% if comments %}
-        <ul>
+        <div style="display: flex; flex-direction: column; gap: 15px;">
             {% for comment in comments %}
-                <li class="comment-item" style="margin-bottom: 10px; padding: 10px; background-color: #f8f9fa; border-radius: 5px;">
-                    <strong>{{ comment.user.username }}</strong><br>
-                    <span style="font-size: 12px; color: gray;">{{ comment.created_at }}</span>
-                </li>
+                <div style="display: flex; align-items: flex-start; gap: 10px;">
+                    <!-- Profile Circle with User Initials -->
+                    <div style="width: 40px; height: 40px; background-color: #007bff; color: white; font-size: 18px; font-weight: bold; 
+                                display: flex; align-items: center; justify-content: center; border-radius: 50%;">
+                        {{ comment.user.username|first|upper }}
+                    </div>
+                    
+                    <!-- Comment Content -->
+                    <div style="flex: 1; background: #f9f9f9; border-radius: 10px; padding: 10px; box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);">
+                        <div style="display: flex; align-items: center; justify-content: space-between;">
+                            <strong style="color: #333;">{{ comment.user.username }}</strong>
+                            <span style="font-size: 12px; color: gray;">{{ comment.created_at|date:"M d, Y, g:i A" }}</span>
+                        </div>
+                        <p style="color: #444; margin-top: 5px;">{{ comment.content }}</p>
+
+                        <!-- Delete Button (Only for comment owner or admin) -->
+                        {% if user == comment.user or user.is_superuser %}
+                            <form action="{% url 'delete_comment' comment.id %}" method="post" style="margin-top: 5px;">
+                                {% csrf_token %}
+                                <button type="submit" style="background-color: red; color: white; border: none; padding: 5px 10px; font-size: 12px; cursor: pointer; border-radius: 5px;">
+                                    🗑️ Delete
+                                </button>
+                            </form>
+                        {% endif %}
+                    </div>
+                </div>
             {% endfor %}
-        </ul>
+        </div>
     {% else %}
-        <p>No comments yet. Be the first to comment!</p>
+        <p style="text-align: center; color: #666;">No comments yet. Be the first to comment!</p>
     {% endif %}
 </div>
 
-  
-    <br>
-    <!-- Link back to the video list -->
-    <a href="{% url 'video_list' %}">Back to Video List</a>
+    </div>
+
 </body>
 
 </html>
