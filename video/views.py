@@ -21,17 +21,7 @@ def add_video(request):
         form = VideoForm()
     return render(request, 'video/add_video.html', {'form': form})
 
-# @user_passes_test(is_admin)
-# def edit_video(request, video_id):
-#     video = get_object_or_404(Video, id=video_id)
-#     if request.method == 'POST':
-#         form = VideoForm(request.POST, request.FILES, instance=video)
-#         if form.is_valid():
-#             form.save()
-#             return redirect('video_list')
-#     else:
-#         form = VideoForm(instance=video)
-#     return render(request, 'video/edit_video.html', {'form': form, 'video': video})
+
 
 
 def edit_video(request, video_id):

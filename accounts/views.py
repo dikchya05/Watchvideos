@@ -15,34 +15,7 @@ def register(request):
         form = CustomUserForm()
     return render(request, 'accounts/register.html', {'form': form})
 
-# def user_login(request):
-#     if request.method == 'POST':
-#         username = request.POST['username']
-#         password = request.POST['password']
-#         print('username ------------------------>', username )
-#         print('user ------------------------>', password)
-#         user = authenticate(request, username=username, password=password)
-#         print('user ------------------------>', user)
-#         if user:
-#             login(request, user)
-#             return redirect('home')
-#     return render(request, 'accounts/login.html')
 
-
-# def user_login(request):
-#     if request.method == 'POST':
-#         username = request.POST.get('username')
-#         password = request.POST.get('password')
-
-#         user = authenticate(request, username=username, password=password)
-
-#         if user:
-#             login(request, user)
-#             return redirect('home')  # Redirect to the home page after login
-#         else:
-#             messages.error(request, "Invalid username or password!")
-
-#     return render(request, 'accounts/login.html')
 
 def user_login(request):
     if request.method == "POST":
