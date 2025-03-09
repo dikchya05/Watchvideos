@@ -59,7 +59,7 @@ ROOT_URLCONF = 'video_streaming.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],  # Add this line to ensure templates are loaded from the 'templates' folder in the base directory.
+        'DIRS': [BASE_DIR / "templates"],  # Ensure this points to the templates folder
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -71,6 +71,7 @@ TEMPLATES = [
         },
     },
 ]
+
 
 WSGI_APPLICATION = 'video_streaming.wsgi.application'
 

@@ -1,3 +1,5 @@
+{% include "navbar.html" %}
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,19 +8,47 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Video List</title>
     <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-top: 50px;
+            color: #FF4F5A; /* Red color for the heading */
+        }
+
         table {
-            width: 100%;
+            width: 80%;
+            margin: 30px auto;
             border-collapse: collapse;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
         }
 
         th, td {
-            padding: 12px;
+            padding: 15px;
             text-align: left;
             border-bottom: 1px solid #ddd;
         }
 
         th {
             background-color: #f2f2f2;
+            color: #333;
+            font-weight: bold;
+        }
+
+        td a {
+            color: #FF4F5A;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        td a:hover {
+            text-decoration: underline;
         }
 
         .button {
@@ -28,6 +58,7 @@
             border: none;
             cursor: pointer;
             border-radius: 5px;
+            transition: background-color 0.3s ease;
         }
 
         .button:hover {
@@ -41,36 +72,75 @@
         .delete-btn:hover {
             background-color: #c0392b;
         }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .actions form {
+            display: inline-block;
+        }
+
+        .container {
+            padding: 20px;
+        }
+
+        footer {
+            background-color: #ffffff;
+            padding: 20px 0;
+            text-align: center;
+            margin-top: 30px;
+            border-top: 2px solid #FF4F5A;
+        }
+
+        footer p {
+            font-size: 14px;
+            color: #333;
+        }
+
+        footer a {
+            color: #FF4F5A;
+            text-decoration: none;
+        }
     </style>
 </head>
 
 <body>
+
+<div class="container">
     <h1>Video List</h1>
 
     <table>
-        <tr>
-            <th>Title</th>
-            <th>Description</th>
-            <th>Actions</th>
-        </tr>
-        {% for video in videos %}
-        <tr>
-            <td>
-                <!-- Link to the video detail page -->
-                <a href="{% url 'video_detail' video.id %}">{{ video.title }}</a>
-            </td>
-            <td>{{ video.description }}</td>
-            <td>
-                <a href="{% url 'edit_video' video.id %}" class="button">Edit</a>
-                <form action="{% url 'delete_video' video.id %}" method="POST" style="display:inline;">
-                    {% csrf_token %}
-                    <button type="submit" class="button delete-btn">Delete</button>
-                </form>
-            </td>
-        </tr>
-        {% endfor %}
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for video in videos %}
+            <tr>
+                <td>
+                    <a href="{% url 'video_detail' video.id %}">{{ video.title }}</a>
+                </td>
+                <td>{{ video.description }}</td>
+                <td class="actions">
+                    <a href="{% url 'edit_video' video.id %}" class="button">Edit</a>
+                    <form action="{% url 'delete_video' video.id %}" method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class="button delete-btn">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
     </table>
+</div>
 
 </body>
 
 </html>
+
+{% include "footer.html" %}

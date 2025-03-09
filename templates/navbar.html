@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Video Streaming{% endblock %}</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f9f9f9;
+            /* Light background */
+            color: #333;
+            /* Dark text for readability */
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 25px;
+            background-color: #ffffff;
+            /* White background */
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+            /* Soft shadow for depth */
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar a {
+            text-decoration: none;
+            color: #FF4F5A;
+            /* Red text for contrast */
+        }
+
+        .navbar h1 {
+            font-size: 28px;
+            font-weight: bold;
+            margin: 0;
+            text-transform: uppercase;
+        }
+
+        /* Logout Button */
+        .navbar .logout-btn {
+            background-color: #FF4F5A;
+            /* Red button */
+            border: none;
+            padding: 12px 20px;
+            color: white;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.3s ease;
+            text-transform: uppercase;
+        }
+
+        .navbar .logout-btn:hover {
+            background-color: #e03e44;
+            /* Darker red on hover */
+        }
+
+        /* Responsive Design for Navbar */
+        @media (max-width: 768px) {
+            .navbar h1 {
+                font-size: 22px;
+                /* Adjust title size for smaller screens */
+            }
+
+            .navbar .logout-btn {
+                padding: 10px 15px;
+                /* Adjust button padding for smaller screens */
+            }
+        }
+
+        /* Page Content */
+        .content {
+            padding: 40px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            font-size: 2em;
+            font-weight: bold;
+            color: #FF4F5A;
+            /* Red accent color */
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        p {
+            font-size: 1.1em;
+            line-height: 1.6;
+            color: #333;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        /* Buttons */
+        .btn {
+            background-color: #FF4F5A;
+            /* Red button */
+            color: white;
+            padding: 12px 25px;
+            border-radius: 6px;
+            text-decoration: none;
+            text-align: center;
+            display: inline-block;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #e03e44;
+            /* Darker red on hover */
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <a href="/">
+            <h1>🎬 watchvideos</h1>
+        </a>
+        {% if user.is_authenticated %}
+        <form action="{% url 'logout' %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="logout-btn">Logout</button>
+        </form>
+        {% endif %}
+    </div>
+
+</body>
+
+</html>
