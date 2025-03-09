@@ -45,12 +45,19 @@ def register(request):
 #     return render(request, 'accounts/login.html')
 
 def user_login(request):
+    # Check if the user is already logged in
+    if request.user.is_authenticated:
+        return redirect('home')  # Redirect to home if already logged in
+
     if request.method == "POST":
-        username = request.POST["username"]
-        password = request.POST["password"]
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+
+        # Authenticate the user
         user = authenticate(request, username=username, password=password)
 
         if user is not None:
+            # Successful login: log the user in
             login(request, user)
             
             # Get user information except password
@@ -59,21 +66,24 @@ def user_login(request):
                 'first_name': user.first_name,
                 'last_name': user.last_name,
                 'email': user.email,
-                'role': user.role,  # Use the 'role' field from CustomUser model
+                'role': getattr(user, 'role', 'guest'),  # Safely get role from custom user model
                 'last_login': user.last_login,
                 'date_joined': user.date_joined
             }
 
-            # Print or use this user information as needed
-            print('User Information:', user_info)
+            # Debugging: print user information (or save to a log file)
+            print(f"User Information: {user_info}")
 
-            # Check the user's role to define if the user is an admin or normal user
-            user_type = user.role if user.role else 'guest'  # Default to 'normal' if no role assigned
+            # Check the user's role and print it for debugging (optional)
+            user_type = user_info.get('role', 'guest')  # Default to 'guest' if no role is defined
+            print(f"User Role: {user_type}")
 
-            print('user role --------------------------------------->', user_type)
-            return redirect('home')  # Redirect to home page after login
+            # Redirect the user to the home page after successful login
+            return redirect('home')
+        
         else:
-            # Invalid credentials
+            # Invalid login credentials: Render the login page with an error message
             return render(request, 'accounts/login.html', {'error': 'Invalid credentials'})
 
+    # GET request: Render the login page
     return render(request, 'accounts/login.html')

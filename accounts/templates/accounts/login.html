@@ -1,28 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Login</title>
 </head>
-<body class="flex justify-center items-center h-screen bg-gray-100">
-    <div class="w-full max-w-md bg-white p-8 rounded-lg shadow-lg">
-        <h2 class="text-2xl font-bold text-center mb-6">Login</h2>
-        <form method="POST" action="{% url 'login' %}" class="space-y-4">
+
+<body class="flex justify-center items-center h-screen bg-gradient-to-r from-white via-red-100 to-white">
+
+    <div class="w-full max-w-md bg-white p-8 rounded-2xl shadow-xl border border-gray-200">
+        <h2 class="text-3xl font-semibold text-center text-black mb-8">Login</h2>
+
+        <form method="POST" action="{% url 'login' %}" class="space-y-6">
             {% csrf_token %}
 
-            <input type="text" name="username" placeholder="Username" class="w-full p-3 border rounded-lg focus:ring focus:ring-blue-300">
+            <div>
+                <label for="username" class="block text-lg font-medium text-gray-700">Username</label>
+                <input type="text" name="username" id="username" placeholder="Enter your username"
+                    class="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-400 transition duration-300 ease-in-out shadow-sm">
+            </div>
 
-            <input type="password" name="password" placeholder="Password" class="w-full p-3 border rounded-lg focus:ring focus:ring-blue-300">
-            
-            <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600">Login</button>
+            <div>
+                <label for="password" class="block text-lg font-medium text-gray-700">Password</label>
+                <input type="password" name="password" id="password" placeholder="Enter your password"
+                    class="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-400 transition duration-300 ease-in-out shadow-sm">
+            </div>
+
+            <button type="submit"
+                class="w-full bg-red-500 text-white py-3 rounded-lg hover:bg-red-600 transition duration-200 ease-in-out shadow-md transform hover:scale-105">Login</button>
         </form>
 
-        <p class="text-center text-sm mt-4">
-            Don't have an account? 
-            <a href="{% url 'register' %}" class="text-blue-500 hover:underline">Register here</a>
+        <p class="text-center text-sm mt-6 text-gray-600">
+            Don't have an account?
+            <a href="{% url 'register' %}" class="text-red-500 hover:underline">Register here</a>
         </p>
     </div>
+
 </body>
+
 </html>
