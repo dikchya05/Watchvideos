@@ -1,0 +1,135 @@
+<footer>
+    <div class="footer-container">
+        <div class="footer-section">
+            <h3>Watch Videos</h3>
+            <p>Stream the best videos, anytime, anywhere. Watch on any device and stay entertained!</p>
+        </div>
+
+        <div class="footer-section">
+            <h3>Quick Links</h3>
+            <ul>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'video_list' %}">Videos</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-section">
+            <h3>Follow Us</h3>
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <p>© 2025 Watch Videos Platform | All Rights Reserved</p>
+    </div>
+</footer>
+
+<!-- Internal CSS -->
+<style>
+    footer {
+        background-color: #ffffff; /* Light white background */
+        color: #333333; /* Dark text for contrast */
+        padding: 40px 0;
+        font-family: 'Arial', sans-serif;
+        text-align: center;
+        border-top: 4px solid #FF4F5A; /* Red border for visual separation */
+    }
+
+    .footer-container {
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        padding: 20px 40px;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .footer-section {
+        max-width: 300px;
+        margin-bottom: 20px;
+        text-align: left;
+    }
+
+    .footer-section h3 {
+        font-size: 20px;
+        color: #FF4F5A; /* Red color for section headers */
+        margin-bottom: 15px;
+        font-weight: bold;
+    }
+
+    .footer-section p {
+        font-size: 14px;
+        color: #777; /* Light gray for secondary text */
+    }
+
+    .footer-section ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .footer-section ul li {
+        margin: 10px 0;
+    }
+
+    .footer-section ul li a {
+        color: #333;
+        text-decoration: none;
+        font-size: 16px;
+        transition: color 0.3s ease;
+    }
+
+    .footer-section ul li a:hover {
+        color: #FF4F5A; /* Red hover color for links */
+    }
+
+    .social-icons {
+        margin-top: 10px;
+    }
+
+    .social-icons a {
+        color: #333;
+        font-size: 24px;
+        margin: 0 10px;
+        transition: color 0.3s ease, transform 0.3s ease;
+    }
+
+    .social-icons a:hover {
+        color: #FF4F5A; /* Red hover color for icons */
+        transform: scale(1.1); /* Slight grow effect on hover */
+    }
+
+    .footer-bottom {
+        background-color: #ffffff; /* White background for footer bottom */
+        padding: 15px;
+        font-size: 14px;
+        color: #777;
+        border-top: 1px solid #f1f1f1; /* Light gray top border */
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .footer-container {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .footer-section {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .footer-section h3 {
+            font-size: 18px;
+        }
+    }
+</style>
+
+<!-- FontAwesome for Icons -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"></script>

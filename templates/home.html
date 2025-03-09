@@ -1,125 +1,171 @@
-<!DOCTYPE html>
-<html lang="en">
+{% include 'navbar.html' %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home Page</title>
-    <style>
-        .admin-panel {
-            background-color: #f8f9fa;
-            padding: 20px;
-            border-radius: 8px;
-        }
+<!-- Hero Section -->
+<div class="hero">
+    <div class="hero-content">
+        <h1>Welcome to Watch Videos</h1>
+        <p>Explore trending videos and enjoy unlimited entertainment.</p>
+    </div>
+</div>
 
-        .user-panel {
-            background-color: #e9f7fd;
-            padding: 20px;
-            border-radius: 8px;
-        }
-
-        .button {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-
-        .button:hover {
-            background-color: #45a049;
-        }
-
-        .admin-action {
-            margin-top: 10px;
-        }
-
-        .video-actions {
-            margin-top: 20px;
-        }
-
-        .video-actions a {
-            display: inline-block;
-            margin-right: 15px;
-            color: #007bff;
-            text-decoration: none;
-        }
-
-        .video-actions a:hover {
-            text-decoration: underline;
-        }
-    </style>
-</head>
-
-<body>
-
-    <h1>Welcome to the Home Page</h1>
-
+<!-- Dashboard Container -->
+<div class="dashboard-container">
     {% if user.is_authenticated %}
-    <p>Hello, {{ user.username }}!</p>
+    <p class="welcome-msg">Welcome, <strong>{{ user.username }}</strong>!</p>
 
     {% if user_type == 'admin' %}
-    <div class="admin-panel">
-        <h2>Admin Panel</h2>
-
-        <p>Manage all aspects of the site. You can add, update, and delete videos.</p>
-
-        <!-- Add New Video -->
-        <div class="admin-action">
-            <a href="{% url 'add_video' %}">add Video</a>
-        </div>
-
-        <!-- Edit and Delete Videos -->
-        <div class="video-actions">
-            <h3>Manage Existing Videos:</h3>
-            <a href="{% url 'video_list' %}">click here</a>
-        </div>
-
-        <br><br>
-        <!-- Logout Form -->
-        <form action="{% url 'logout' %}" method="post">
-            {% csrf_token %}
-            <button type="submit" class="button">Logout</button>
-        </form>
+    <div class="panel admin-panel">
+        <img src="https://img.icons8.com/ios/100/admin-settings-male.png" alt="Admin">
+        <h2>Admin Dashboard</h2>
+        <p>Manage videos and users efficiently.</p>
+        <a href="{% url 'add_video' %}" class="button admin-button">Add Video</a>
+        <a href="{% url 'video_list' %}" class="button admin-button">Manage Videos</a>
     </div>
-
     {% elif user_type == 'normal' %}
-    <div class="user-panel">
-        <h2>User Panel</h2>
-        <p>Welcome to your dashboard! Enjoy the videos and feel free to comment or like videos.</p>
-
-        <div class="admin-action">
-            <a href="{% url 'user_video_list' %}">view Video</a>
-        </div>
-
-        <br><br>
-        <!-- Logout Form -->
-        <form action="{% url 'logout' %}" method="post">
-            {% csrf_token %}
-            <button type="submit" class="button">Logout</button>
-        </form>
+    <div class="panel user-panel">
+        <img src="https://img.icons8.com/ios/100/user.png" alt="User">
+        <h2>User Dashboard</h2>
+        <p>Enjoy watching trending videos.</p>
+        <a href="{% url 'user_video_list' %}" class="button user-button">▶ Watch Videos</a>
     </div>
     {% endif %}
 
     {% else %}
-    <p>You are not logged in. <a href="{% url 'login' %}">Login</a> to access your account.</p>
+    <p class="login-msg">You are not logged in. <a href="{% url 'login' %}">Login</a> to continue.</p>
     {% endif %}
+</div>
 
-    <script>
-        var user_type = '{{ user_type }}';
-        console.log("user_type ---------------------->", user_type);
 
-        // Additional interactive JavaScript features can be added here.
-        function handleAdminClick() {
-            alert('Admin features are coming soon!');
+
+{% include 'footer.html' %}
+
+<!-- Additional Styles -->
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f9f9f9;
+        color: #333;
+        margin: 0;
+        padding: 0;
+    }
+
+    .hero {
+        background-color: #ff4f5a;
+        color: white;
+        padding: 100px 0;
+        text-align: center;
+    }
+
+    .hero h1 {
+        font-size: 3.5em;
+        margin: 0;
+    }
+
+    .hero p {
+        font-size: 1.5em;
+        margin: 20px 0;
+    }
+
+    .dashboard-container {
+        padding: 50px 20px;
+        text-align: center;
+    }
+
+    .welcome-msg {
+        font-size: 1.2em;
+        color: #333;
+    }
+
+    .panel {
+        background-color: white;
+        border-radius: 8px;
+        padding: 20px;
+        margin: 20px auto;
+        width: 80%;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+
+    .admin-panel,
+    .user-panel {
+        width: 60%;
+    }
+
+    .admin-button,
+    .user-button {
+        background-color: #ff4f5a;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-decoration: none;
+        margin: 10px 0;
+        display: inline-block;
+        font-weight: bold;
+        transition: background-color 0.3s;
+    }
+
+    .admin-button:hover,
+    .user-button:hover {
+        background-color: #e03e44;
+    }
+
+    .login-msg {
+        font-size: 1.1em;
+        color: #555;
+    }
+
+    .section-title {
+        font-size: 2em;
+        text-align: center;
+        margin: 50px 0;
+        color: #333;
+    }
+
+    .video-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+        padding: 20px;
+    }
+
+    .video-card {
+        background-color: #222;
+        border-radius: 12px;
+        overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        text-decoration: none;
+    }
+
+    .video-card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 8px 16px rgba(255, 0, 0, 0.4);
+    }
+
+    .video-container {
+        width: 100%;
+        height: 180px;
+        background: black;
+    }
+
+    .video-container video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .video-card .title {
+        padding: 12px;
+        font-size: 16px;
+        font-weight: bold;
+        text-align: center;
+        color: white;
+        background-color: #333;
+    }
+
+    @media (max-width: 600px) {
+        .video-container {
+            height: 150px;
         }
-
-        function handleUserClick() {
-            alert('You are about to view videos!');
-        }
-    </script>
-
-</body>
-
-</html>
+    }
+</style>

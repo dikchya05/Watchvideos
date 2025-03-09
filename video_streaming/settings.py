@@ -59,7 +59,7 @@ ROOT_URLCONF = 'video_streaming.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],  # Add this line to ensure templates are loaded from the 'templates' folder in the base directory.
+        'DIRS': [BASE_DIR / "templates"],  # Ensure this points to the templates folder
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -71,6 +71,7 @@ TEMPLATES = [
         },
     },
 ]
+
 
 WSGI_APPLICATION = 'video_streaming.wsgi.application'
 
@@ -121,6 +122,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'static/'
+# Add this line if it's missing
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
+
+# If using collectstatic (not needed for development)
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 AUTH_USER_MODEL = 'accounts.CustomUser'  # If using a custom user model
 
 

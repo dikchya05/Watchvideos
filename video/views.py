@@ -55,6 +55,27 @@ def edit_video(request, video_id):
 #         return redirect('video_list')
 #     return render(request, 'video/delete_video.html', {'video': video})
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 def delete_video(request, video_id):
     video = get_object_or_404(Video, id=video_id)
     if request.method == 'POST':
@@ -70,24 +91,29 @@ def user_video_list(request):
     videos = Video.objects.all()
     return render(request, 'video/user_video_list.html', {'videos': videos})
 
+# def recommended_videos(request):
+#     videos = Video.objects.all().order_by('-created_at')[:10]  # Show latest 10 videos
+#     return render(request, 'video/recommended_videos.html', {'videos': videos})
+
 def video_detail(request, video_id):
     # Get the specific video by ID
     video = get_object_or_404(Video, id=video_id)
     # Get all comments related to this video
-    comments = video.comments.all()
+    comments = Comment.objects.filter(video=video).order_by('-created_at')
+   
 
     # Create a new comment form
     form = CommentForm()
 
-    # Handle form submission
-    if request.method == "POST":
+  # If the request is a POST (i.e., submitting a comment)
+    if request.method == 'POST':
         form = CommentForm(request.POST)
         if form.is_valid():
             comment = form.save(commit=False)
-            comment.user = request.user  # Assign the logged-in user to the comment
-            comment.video = video  # Associate the comment with the current video
+            comment.video = video
+            comment.user = request.user
             comment.save()
-            return redirect('video_detail', video_id=video.id)  # Redirect back to the video page
+            return redirect('video_detail', video_id=video.id)  # Refresh the page
 
     return render(request, 'video/video_detail.html', {
         'video': video,
@@ -95,15 +121,36 @@ def video_detail(request, video_id):
         'form': form
     })
     
+    
+    
     # Render the detail page with the video data
     # return render(request, 'video/video_detail.html', {'video': video})
 
 def user_video_detail(request, video_id):
     # Get the specific video by ID
     video = get_object_or_404(Video, id=video_id)
-    
-    # Render the detail page with the video data
-    return render(request, 'video/video_detail.html', {'video': video})
+    comments = Comment.objects.filter(video=video).order_by('-created_at')
+   
+
+    # Create a new comment form
+    form = CommentForm()
+
+  # If the request is a POST (i.e., submitting a comment)
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.video = video
+            comment.user = request.user
+            comment.save()
+            return redirect('video_detail', video_id=video.id) 
+        # Refresh the page
+    return render(request, 'video/video_detail.html', {
+        'video': video,
+        'comments': comments,
+        'form': form
+    })
+
 
 
 @login_required
@@ -145,4 +192,12 @@ def add_comment(request, video_id):
     return redirect("video_detail", video_id=video_id)
 
 
-
+@login_required
+def delete_comment(request, comment_id):
+    comment = get_object_or_404(Comment, id=comment_id)
+    
+    # Allow only the comment owner or admin to delete
+    if request.user == comment.user or request.user.is_superuser:
+        comment.delete()
+    
+    return redirect(request.META.get('user_video_details', 'home'))

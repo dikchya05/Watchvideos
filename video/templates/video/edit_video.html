@@ -1,3 +1,4 @@
+{% include "navbar.html" %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,48 +7,153 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Video</title>
     <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #FF4F5A;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .form-container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
         .form-group {
             margin-bottom: 20px;
         }
 
         label {
             display: block;
-            margin-bottom: 5px;
             font-weight: bold;
+            margin-bottom: 8px;
+            color: #333;
         }
 
-        input[type="text"], textarea, input[type="file"] {
+        input[type="text"],
+        textarea,
+        input[type="file"] {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             font-size: 1rem;
             border: 1px solid #ddd;
-            border-radius: 4px;
+            border-radius: 5px;
+            box-sizing: border-box;
+            background-color: #fafafa;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="text"]:focus,
+        textarea:focus,
+        input[type="file"]:focus {
+            border-color: #ff4f5a;
+            outline: none;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 150px;
         }
 
         button {
-            background-color: #4CAF50;
+            background-color: #FF4F5A;
             color: white;
-            padding: 10px 20px;
+            padding: 12px 20px;
+            font-size: 1.1rem;
             border: none;
             cursor: pointer;
             border-radius: 5px;
+            width: 100%;
+            transition: background-color 0.3s ease;
         }
 
         button:hover {
-            background-color: #45a049;
+            background-color: #D93A45;
         }
 
+        .form-container .form-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .form-actions a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .form-actions a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive Styling */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .form-container {
+                padding: 20px;
+            }
+
+            button {
+                font-size: 1rem;
+            }
+        }
     </style>
 </head>
 
 <body>
+
     <h1>Edit Video - {{ video.title }}</h1>
 
-    <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Save Changes</button>
-    </form>
+    <div class="form-container">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="title">Video Title</label>
+                {{ form.title }}
+            </div>
+
+            <div class="form-group">
+                <label for="description">Description</label>
+                {{ form.description }}
+            </div>
+
+            <div class="form-group">
+                <label for="video_file">Video File</label>
+                {{ form.video_file }}
+            </div>
+
+            <div class="form-group">
+                <label for="thumbnail">Thumbnail</label>
+                {{ form.thumbnail }}
+            </div>
+
+            <div class="form-actions">
+                <button type="submit">Save Changes</button>
+                <button>
+                    <a href="{% url 'video_list' %}">Cancel</a>
+                </button>
+            </div>
+        </form>
+    </div>
+
+    {% include "footer.html" %}
 </body>
 
 </html>

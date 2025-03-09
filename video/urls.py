@@ -2,7 +2,7 @@ from django.urls import path
 from . import views
 from django.conf.urls.static import static
 from django.conf import settings
-from .views import like_video, dislike_video
+from .views import like_video, dislike_video, delete_comment
 
 
 
@@ -23,6 +23,8 @@ urlpatterns = [
     path('video/<int:video_id>/like/', like_video, name='like_video'),
     path('video/<int:video_id>/dislike/', dislike_video, name='dislike_video'),
     path("video/<int:video_id>/comment/", views.add_comment, name="add_comment"),
+     path('comment/delete/<int:comment_id>/', delete_comment, name='delete_comment'),
+    # path('recommended/', recommended_videos, name='recommended_videos'),
    
 
 

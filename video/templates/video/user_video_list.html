@@ -1,85 +1,178 @@
+{% include "navbar.html" %}
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video List</title>
+    <title>Recommended Videos</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #181818;
-            color: white;
+            font-family: 'Arial', sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
             margin: 0;
             padding: 0;
         }
 
-        .container {
-            width: 90%;
-            margin: auto;
-            padding: 20px;
-        }
-
-        h1 {
+        /* Navbar Styling */
+        nav {
+            background-color: #222;
+            color: #fff;
+            padding: 15px;
             text-align: center;
         }
 
-        .video-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            padding: 20px;
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px;
+            margin: 0 10px;
         }
 
+        nav a:hover {
+            background-color: #ff4f5a;
+            border-radius: 5px;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: auto;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #ff4f5a;
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+
+        /* Video Grid Styling */
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            padding: 20px;
+            justify-items: center;
+        }
+
+        /* Video Card Styling */
         .video-card {
-            background-color: #222;
-            border-radius: 10px;
+            background-color: #fff;
+            border-radius: 12px;
             overflow: hidden;
-            cursor: pointer;
-            transition: transform 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-decoration: none;
+            border: 1px solid #ddd;
+            width: 100%;
         }
 
         .video-card:hover {
             transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(255, 0, 0, 0.2);
+        }
+
+        /* Video Thumbnail Container */
+        .video-container {
+            width: 100%;
+            height: 200px;
+            background-color: black;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .video-container video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         .video-card img {
             width: 100%;
-            height: 150px;
+            height: 100%;
             object-fit: cover;
         }
 
+        /* Video Title */
         .video-card .title {
+            padding: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: left;
+            color: #333;
+            background-color: #fff;
+            border-top: 1px solid #ddd;
+        }
+
+        .video-card .title:hover {
+            background-color: #d93a45;
+        }
+
+        /* Video Description */
+        .video-card .description {
             padding: 10px;
-            font-size: 16px;
-            text-align: center;
+            color: #666;
+            font-size: 14px;
+            text-align: left;
+            background-color: #f4f4f4;
+            border-top: 1px solid #ddd;
         }
 
-        a {
-            text-decoration: none;
-            color: white;
+        .video-card .description:hover {
+            background-color: #f0f0f0;
         }
 
-        @media (max-width: 600px) {
-            .video-card img {
-                height: 120px;
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .video-container {
+                height: 180px;
+            }
+
+            .video-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             }
         }
     </style>
 </head>
 
 <body>
+
     <div class="container">
         <h1>Recommended Videos</h1>
         <div class="video-grid">
             {% for video in videos %}
             <a href="{% url 'user_video_detail' video.id %}" class="video-card">
-                <img src="{{ video.thumbnail.url }}" alt="{{ video.title }}">
+                <div class="video-container">
+                    {% if video.file %}
+                    <video controls>
+                        <source src="{{ video.file.url }}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    {% else %}
+                    <img src="{{ video.thumbnail.url }}" alt="Thumbnail">
+                    {% endif %}
+                </div>
                 <div class="title">{{ video.title }}</div>
+                <div class="description">
+                    {% if video.description %}
+                    {{ video.description|slice:":100" }}...
+                    {% else %}
+                    No description available.
+                    {% endif %}
+                </div>
             </a>
             {% endfor %}
         </div>
     </div>
+
 </body>
 
 </html>
+{% include "footer.html" %}
