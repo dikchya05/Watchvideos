@@ -22,8 +22,6 @@ def add_video(request):
     return render(request, 'video/add_video.html', {'form': form})
 
 
-
-
 def edit_video(request, video_id):
     video = get_object_or_404(Video, id=video_id)
 
@@ -37,13 +35,7 @@ def edit_video(request, video_id):
 
     return render(request, 'video/edit_video.html', {'form': form, 'video': video})
 
-# @user_passes_test(is_admin)
-# def delete_video(request, video_id):
-#     video = get_object_or_404(Video, id=video_id)
-#     if request.method == 'POST':
-#         video.delete()
-#         return redirect('video_list')
-#     return render(request, 'video/delete_video.html', {'video': video})
+
 
 
 
