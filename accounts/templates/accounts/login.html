@@ -11,6 +11,32 @@
 <body class="flex justify-center items-center h-screen bg-gradient-to-r from-white via-red-100 to-white">
 
     <div class="w-full max-w-md bg-white p-8 rounded-2xl shadow-xl border border-gray-200">
+
+        <!-- Display Toast Messages -->
+        {% if messages %}
+            <div class="mb-4 space-y-2">
+                {% for message in messages %}
+                    {% if message.tags == 'success' %}
+                        <div class="w-full p-4 text-green-800 bg-green-100 border border-green-300 rounded-lg">
+                            {{ message }}
+                        </div>
+                    {% elif message.tags == 'error' %}
+                        <div class="w-full p-4 text-red-800 bg-red-100 border border-red-300 rounded-lg">
+                            {{ message }}
+                        </div>
+                    {% elif message.tags == 'info' %}
+                        <div class="w-full p-4 text-blue-800 bg-blue-100 border border-blue-300 rounded-lg">
+                            {{ message }}
+                        </div>
+                    {% else %}
+                        <div class="w-full p-4 text-gray-800 bg-gray-100 border border-gray-300 rounded-lg">
+                            {{ message }}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endif %}
+        
         <h2 class="text-3xl font-semibold text-center text-black mb-8">Login</h2>
 
         <form method="POST" action="{% url 'login' %}" class="space-y-6">
