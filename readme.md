@@ -7,14 +7,14 @@ This is a video streaming web application built with Django. It allows users to 
 - **User Authentication**: Users can register and log in to their accounts.
 - **User Roles**: Two user roles are available: Admin and Normal User. Admins can manage the videos.
 - **Video Viewing**: Users can view videos listed on the site.
-- **Video Interaction**: Users can like, dislike, and comment on videos.
+- **Video Interaction**: Users can like, dislike, comment on videos and delete their comments on videos.
 - **Error and Success Messages**: The app uses toast notifications for success and error messages, such as invalid login credentials or successful registration.
 
 ## Requirements
 
 - Python 3.8+
 - Django 3.2+
-- SQLite for development (can be switched to other databases like PostgreSQL for production)
+- SQLite for development 
 
 ## Installation
 
@@ -73,7 +73,7 @@ Visit `http://127.0.0.1:8000/` to access the application.
 ### 3. **Video Interaction**
 
 - Users can view videos on the homepage.
-- Each video page has options for liking, disliking, and commenting on the video.
+- Each video page has options for liking, disliking, commenting on the video and delete their comments on video.
 
 ### 4. **Toast Notifications**
 
@@ -82,7 +82,7 @@ Visit `http://127.0.0.1:8000/` to access the application.
 
 ### 5. **Styling**
 
-- The app uses Tailwind CSS for styling, which provides a clean and modern look.
+- The app uses CSS for styling, which provides a clean and modern look.
 
 ### 6. **Database**
 

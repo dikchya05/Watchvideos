@@ -10,12 +10,6 @@ urlpatterns = [
     path('videos/', views.video_list, name='video_list'),
     path('user-videos/', views.user_video_list, name='user_video_list'),
     path('videos/add/', views.add_video, name='add_video'),
-    # path('videos/edit/<int:video_id>/', views.edit_video, name='edit_video'),
-    # path('videos/delete/<int:video_id>/', views.delete_video, name='delete_video'),
-    
-    # path('videos/edit/<int:video_id>/', views.edit_video, name='edit_video'),
-    # path('videos/delete/<int:video_id>/', views.delete_video, name='delete_video'),
-    
     path('edit/<int:video_id>/', views.edit_video, name='edit_video'),  # Edit video page
     path('delete/<int:video_id>/', views.delete_video, name='delete_video'),  # Delete video
     path('video/<int:video_id>/', views.video_detail, name='video_detail'),  # Video detail page
