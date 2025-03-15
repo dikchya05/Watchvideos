@@ -14,7 +14,6 @@ This is a video streaming web application built with Django. It allows users to 
 
 - Python 3.8+
 - Django 3.2+
-- Tailwind CSS for styling
 - SQLite for development (can be switched to other databases like PostgreSQL for production)
 
 ## Installation
@@ -22,8 +21,8 @@ This is a video streaming web application built with Django. It allows users to 
 ### Step 1: Clone the repository
 
 ```bash
-git clone <repository_url>
-cd <repository_directory>
+git clone https://github.com/dikchya05/Watchvideos.git
+cd Watchvideos
 ```
 
 ### Step 2: Create a virtual environment
