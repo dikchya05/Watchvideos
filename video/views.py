@@ -155,6 +155,8 @@ def delete_comment(request, comment_id):
     
     # Allow only the comment owner or admin to delete
     if request.user == comment.user or request.user.is_superuser:
+        video_id = comment.video.id  # Get the video ID before deleting the comment
         comment.delete()
     
-    return redirect(request.META.get('user_video_details', 'home'))
+    # Redirect to the same video's detail page dynamically
+    return redirect('video_detail', video_id=video_id)
