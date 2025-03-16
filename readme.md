@@ -1,20 +1,30 @@
-# WATCH VIDEO Web App
+# WATCHVIDEO Web App
 
-This is a video streaming web application built with Django. It allows users to register, log in, and interact with videos by viewing, liking, disliking, and commenting on them. The app also supports admin features, where admins can manage video content.
+This is a Watch Video web application built with Django. It allows users to register, log in, and interact with videos by viewing, liking, disliking, and commenting on them. The app also supports admin features, where admins can manage video content.
 
 ## Features
 
 - **User Authentication**: Users can register and log in to their accounts.
 - **User Roles**: Two user roles are available: Admin and Normal User. Admins can manage the videos.
 - **Video Viewing**: Users can view videos listed on the site.
-- **Video Interaction**: Users can like, dislike, and comment on videos.
+- **Video Interaction**: Users can like, dislike, comment on videos and delete their comments on videos.
 - **Error and Success Messages**: The app uses toast notifications for success and error messages, such as invalid login credentials or successful registration.
+
+## Admin & User Credentials (For Testing)
+### Admin
+- **Username:** `admin`  
+- **Password:** `@Dm!n12345`  
+
+### Normal User
+- **Username:** `user`  
+- **Password:** `U5er@12345`  
 
 ## Requirements
 
 - Python 3.8+
 - Django 3.2+
-- SQLite for development (can be switched to other databases like PostgreSQL for production)
+- Tailwind CSS for styling
+- SQLite for development 
 
 ## Installation
 
@@ -73,7 +83,7 @@ Visit `http://127.0.0.1:8000/` to access the application.
 ### 3. **Video Interaction**
 
 - Users can view videos on the homepage.
-- Each video page has options for liking, disliking, and commenting on the video.
+- Each video page has options for liking, disliking, commenting on the video, and deleting their comments.
 
 ### 4. **Toast Notifications**
 
@@ -82,7 +92,7 @@ Visit `http://127.0.0.1:8000/` to access the application.
 
 ### 5. **Styling**
 
-- The app uses Tailwind CSS for styling, which provides a clean and modern look.
+- The app uses Tailwind CSS for styling, providing a clean and modern look.
 
 ### 6. **Database**
 
@@ -95,4 +105,3 @@ If you'd like to contribute to this project, please fork the repository, create 
 ## License
 
 This project is open-source and available under the [MIT License](LICENSE).
-```
