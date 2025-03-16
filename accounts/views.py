@@ -8,6 +8,7 @@ from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
 from .forms import UserRegistrationForm
 from django.contrib.auth.models import User  # Import if using default User model
+from django.views.decorators.cache import never_cache  # Import this for cache control
 
 # User Registration View
 def register(request):
@@ -27,6 +28,7 @@ def register(request):
 
 
 # User Login View
+@never_cache
 def user_login(request):
     # Redirect already logged-in users to the home page
     if request.user.is_authenticated:
@@ -41,7 +43,7 @@ def user_login(request):
 
         if user:
             login(request, user)
-            messages.success(request, f"Welcome, {user.username}! You have successfully logged in.")
+            # messages.success(request, f"Welcome, {user.username}! You have successfully logged in.")
 
             # Log user information for debugging (optional)
             user_info = {
