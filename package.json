@@ -1,0 +1,20 @@
+{
+  "name": "watchvideos",
+  "version": "1.0.0",
+  "description": "This is a Watch Video web application built with Django. It allows users to register, log in, and interact with videos by viewing, liking, disliking, and commenting on them. The app also supports admin features, where admins can manage video content.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.5",
+    "tailwindcss": "^4.1.10"
+  },
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
