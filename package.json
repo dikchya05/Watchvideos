@@ -4,9 +4,9 @@
   "description": "This is a Watch Video web application built with Django. It allows users to register, log in, and interact with videos by viewing, liking, disliking, and commenting on them. The app also supports admin features, where admins can manage video content.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
-    "build": "echo 'No build step for backend' && exit 0"
+    "build": "echo 'No build step for backend' && exit 0",
+    "test": "echo \"Error: no test specified\" && exit 1"
 
   },
   "keywords": [],
